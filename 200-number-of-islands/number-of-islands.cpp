@@ -1,39 +1,32 @@
-class Solution {
+class Solution{
     public:
+    void dfs(vector<vector<char>>& grid,int i,int j){
+        int m=grid.size();
+        int n=grid[0].size();
 
-        void dfs(int i, int j, vector<vector<bool>> &vis,vector<vector<char>>& grid, int n, int m) {
+        if(i<0 || j<0 || i>=m || j>=n || grid[i][j]=='0')
+        return;
 
-            if (i < 0 || j < 0 || i >= n || j >= m ||vis[i][j] || grid[i][j] != '1') {
-                return;
+        grid[i][j]='0';
+        dfs(grid,i+1,j);
+        dfs(grid,i-1,j);
+        dfs(grid,i,j+1);
+        dfs(grid,i,j-1);
+    }
+
+    int numIslands(vector<vector<char>>& grid){
+        int m=grid.size();
+        int n=grid[0].size();
+        int count=0;
+
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]=='1'){
+                    count++;
+                    dfs(grid,i,j);
+                }
             }
-
-            vis[i][j] = true;
-
-            dfs(i - 1, j, vis, grid, n, m); 
-            dfs(i, j + 1, vis, grid, n, m); 
-            dfs(i + 1, j, vis, grid, n, m); // Down
-            dfs(i, j - 1, vis, grid, n, m); // Left
         }
-
-        int numIslands(vector<vector<char>>& grid) {
-
-            int island = 0;
-
-            int n = grid.size();
-            int m = grid[0].size();
-
-            vector<vector<bool>> vis(n, vector<bool>(m, false));
-
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < m; j++) {
-
-                    if (grid[i][j] == '1' && !vis[i][j]) {
-                        dfs(i, j, vis, grid, n, m);
-                        island++;
-                                                                                                                                                                           }
-                                                                                                                                                                       }
-                                                                                                                                                                   }
-
-            return island;
-                                                                                                                                                               }
+        return count;
+    }
 };
