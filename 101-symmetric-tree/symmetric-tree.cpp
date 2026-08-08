@@ -24,9 +24,9 @@ class Solution {
 
             return mirror(left->left, right->right) &&
             mirror(left->right, right->left);
-                                                                                               }
+        }
 
-            bool isSymmetric(TreeNode* root) {
-                return mirror(root->left, root->right);
-                                                                                                               }
+        bool isSymmetric(TreeNode* root) {
+            return mirror(root->left, root->right);
+        }
 };
