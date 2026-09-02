@@ -2,41 +2,35 @@ class Solution {
     public:
 
         struct compare {
-                bool operator()(ListNode* a, ListNode* b) {
-                            return a->val > b->val;
-                                    }
-                                        };
+            bool operator()(ListNode* a, ListNode* b) {
+                return a->val > b->val;
+            }
+        };
 
-                                            ListNode* mergeKLists(vector<ListNode*>& lists) {
+        ListNode* mergeKLists(vector<ListNode*>& lists) {
 
-                                                    priority_queue<ListNode*, vector<ListNode*>, compare> pq;
+            priority_queue<ListNode*, vector<ListNode*>, compare> pq;
+            for (ListNode* node : lists) {
+                if (node != nullptr) {
+                    pq.push(node);
+                }
+                                                                                                                          }
 
-                                                            // Add first node of every list
-                                                                    for (ListNode* node : lists) {
-                                                                                if (node != nullptr) {
-                                                                                                pq.push(node);
-                                                                                                            }
-                                                                                                                    }
+            ListNode dummy(0);
+            ListNode* tail = &dummy;
 
-                                                                                                                            ListNode dummy(0);
-                                                                                                                                    ListNode* tail = &dummy;
+            while (!pq.empty()) {
+                ListNode* curr = pq.top();
+                pq.pop();
 
-                                                                                                                                            while (!pq.empty()) {
+                tail->next = curr;
+                tail = curr;
 
-                                                                                                                                                        // Get smallest node
-                                                                                                                                                                    ListNode* curr = pq.top();
-                                                                                                                                                                                pq.pop();
+                if (curr->next != nullptr) {
+                    pq.push(curr->next);
+                }
+            }
 
-                                                                                                                                                                                            // Attach smallest node
-                                                                                                                                                                                                        tail->next = curr;
-                                                                                                                                                                                                                    tail = curr;
-
-                                                                                                                                                                                                                                // Add next node from the same list
-                                                                                                                                                                                                                                            if (curr->next != nullptr) {
-                                                                                                                                                                                                                                                            pq.push(curr->next);
-                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                }
-
-                                                                                                                                                                                                                                                                                        return dummy.next;
-                                                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                                                            };
+            return dummy.next;
+        }
+};
